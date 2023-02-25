@@ -1,0 +1,95 @@
+﻿@model HastaneBilgiSistemi.Models.Hastalar
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="container">
+    @if (Model.Id == 0)
+    {
+        <h3>Hasta Ekle</h3>
+    }
+    else
+    {
+        <h3>Hasta Güncelle</h3>
+    }
+
+
+    <form method="POST" asp-action="Create" autocomplete="off">
+        <div class="" style="padding: 25px;">
+            <input type="hidden" asp-for="Id" />
+            <label>Ad : </label>
+            <input type="text" placeholder="Adı Girin" asp-for="Ad" required>
+            <label>Soyad : </label>
+            <input type="text" placeholder="Soyadı Girin" asp-for="Soyad" required>
+            <label>Bölüm : </label>
+            <select id="yetki" class="form-control" asp-items="@(new SelectList(ViewBag.bolumListesi, "Value", "Text"))" asp-for="Bolum" onchange="check()" required>   <!-- controllerda viewbag'e atanan bölümleri döndür-->
+            </select>
+            <label>Doktor : </label>
+            @{
+                foreach (var Data in ViewBag.bolumListesi)
+                {
+                    if (ViewData[Data.Text + "Ad"] != null)     // Viewdata'daki ilgili parametre boş degil ise (örn: ViewData[KardiyolojiAd] boş degil ise
+                    {
+                        <div id=@Data.Text>         <!-- controllerdan viewdataya atanan doktor ad soyadlarını dropdownlist olarak yazdır -->
+                            @Html.DropDownList("Doctor", ViewData[Data.Text + "Ad"] as IEnumerable<SelectListItem>, new { @id = @Data.Text + "1", @class = "form-control" })
+                        </div>
+                    }
+
+
+
+                }
+            }
+
+            <input id="doktorAd" type="hidden" asp-for="DoktorAd" />
+            <input id="doktorSoyad" type="hidden" asp-for="DoktorSoyad" />
+
+            <label>Hasta Öyküsü : </label>
+            <input type="text" placeholder="Hasta Öyküsünü Girin" asp-for="HastaOykusu">
+            <label>Teşhis : </label>
+            <input type="text" placeholder="Teşhisi Girin" asp-for="Teshis">
+            <label>Tedavi : </label>
+            <input type="text" placeholder="Tedaviyi Girin" asp-for="Tedavi">
+            <label>İlaçlar : </label>
+            <input type="text" placeholder="İlaçları Girin" asp-for="Ilaclar">
+
+            <input id="doktorAd" type="hidden" asp-for="LaboratuvarTest" />
+            <input id="doktorSoyad" type="hidden" asp-for="LaboratuvarSonuc" />
+
+            @if (Model.Id == 0)
+            {
+                <button class="btn btn-primary btn-block" onclick="setNames()" type="submit">Ekle</button>
+            }
+            else
+            {
+                <button class="btn btn-primary btn-block" onclick="setNames()" type="submit">Güncelle</button>
+            }
+
+        </div>
+    </form>
+
+    <script>
+        for (let i = 1; i < document.getElementById("yetki").length; i++) {     // dropdownlistteki bölüm sayısı kadar loop döndür ve başlangıçta tüm doktor ad ve soyadlarının gözükmemesi için hepsinin display'ini none yapma işlemi
+            document.getElementById(document.getElementById("yetki").options[i].value + "1").style.display = "none" 
+        }
+
+        var id = document.getElementById("yetki").selectedOptions[0].value + "1"        //seçili bölümün doktorad soyad dropdownlist ismini degişkene ata
+
+        function check() {
+            document.getElementById(id).style.display = "none"      //bir önceki seçilen bölümün doktorad soyad dropdownlist'ini gizle
+            document.getElementById(document.getElementById("yetki").selectedOptions[0].value + "1").style.display = "block"    //eçilen bölümün doktorad soyad dropdownlist'ini göster
+            id = document.getElementById("yetki").selectedOptions[0].value + "1"    //seçili bölümün doktorad soyad dropdownlist ismini bir sonraki seçildiginde gizleyebilmek için kaydet
+
+        }
+
+    function setNames() {
+        var text = document.getElementById(document.getElementById("yetki").selectedOptions[0].value + "1").selectedOptions[0].value  //seçili doktorun ad ve soyadını degişkene ata
+        var arr = text.split(/\s+/)     //doktorun adını ve soyadını ayır
+        document.getElementById("doktorAd").value = arr[0];     //doktor adını doktorAd inputuna yazdır
+        document.getElementById("doktorSoyad").value = arr[1]   //doktor soyadını doktorSoyad inputuna yazdır
+
+    }
+    </script>
+
+
+</div>

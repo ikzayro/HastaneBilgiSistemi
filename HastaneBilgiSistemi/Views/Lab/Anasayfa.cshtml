@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+    string name = Context.Session.GetString("name");
+    string surname = Context.Session.GetString("surname");
+}
+
+<div class="container">
+    <h2>Hoşgeldiniz Sayın @name @surname</h2><br>
+    <h4>Yukaridaki menülerden istediginiz işlemi seçebilirsiniz.</h2>
+</div>

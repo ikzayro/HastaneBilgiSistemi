@@ -1,0 +1,42 @@
+﻿@model IEnumerable<HastaneBilgiSistemi.Models.Kullanicilar>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout4.cshtml";
+}
+
+<div class="container">
+    <h3>Mevcut Kullanıcılar</h3>
+    <table>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Yetki</th>
+            <th>Bölüm</th>
+            <th>Şifre</th>
+            <th></th>
+        </tr>
+
+        @{
+            if (Model != null)
+            {
+                foreach (var Data in Model)
+                {
+                <tr>
+                    <td>@Data.Ad</td>
+                    <td>@Data.Soyad</td>
+                    <td>@Data.Yetki</td>
+                    <td>@Data.Bolum</td>
+                    <td>@Data.Sifre</td>
+                    <td>
+                        <a asp-action="KullaniciDuzenle" asp-route-id="@Data.Id"><button class="btn btn-secondary btn-block" type="button">Düzenle</button></a>
+                        <a asp-action="Delete2" asp-route-id="@Data.Id"><button class="btn btn-danger btn-block" type="button">Sil</button></a>
+                    </td>
+                </tr>
+                }
+
+            }
+        }
+    </table>
+
+
+</div>

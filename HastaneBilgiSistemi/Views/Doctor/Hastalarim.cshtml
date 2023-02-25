@@ -1,0 +1,52 @@
+﻿@model IEnumerable<HastaneBilgiSistemi.Models.Hastalar>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="container">
+  <h3>Mevcut Hastalarım</h3>
+  <table>
+      <tr>
+          <th>Ad</th>
+          <th>Soyad</th>
+          <th>Bölüm</th>
+          <th>Hasta Öyküsü</th>
+          <th>Teşhis</th>
+          <th>Tedavi</th>
+          <th>İlaçlar</th>
+          <th>İstenilen Test</th>
+          <th>Test Sonucu</th>
+          <th></th>
+      </tr>
+
+      @{
+          if (Model != null)
+          {
+              foreach (var Data in Model)
+              {
+            <tr>
+                <td>@Data.Ad</td>
+                <td>@Data.Soyad</td>
+                <td>@Data.Bolum</td>
+                <td>@Data.HastaOykusu</td>
+                <td>@Data.Teshis</td>
+                <td>@Data.Tedavi</td>
+                <td>@Data.Ilaclar</td>
+                <td>@Data.LaboratuvarTest</td>
+                <td>@Data.LaboratuvarSonuc</td>
+                <td>
+                    <a asp-action="HastaEkle" asp-route-id="@Data.Id"><button class="btn btn-secondary btn-block" type="button">Düzenle</button></a>
+                    <a asp-action="Delete" asp-route-id="@Data.Id"><button class="btn btn-danger btn-block" type="button">Sil</button></a>
+                    <a asp-action="Test" asp-route-id="@Data.Id"><button class="btn btn-info btn-block" type="button">Test İste</button></a>
+                </td>
+            </tr>
+              }
+
+          }
+      }
+
+  </table>
+
+
+</div>

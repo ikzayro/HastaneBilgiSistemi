@@ -1,0 +1,37 @@
+﻿@model HastaneBilgiSistemi.Models.Kullanicilar
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout4.cshtml";
+}
+
+<div class="container">
+    @if (Model.Id == 0)
+    {
+        <h3>Bölüm Ekle</h3>
+    }
+    else
+    {
+        <h3>Bölüm Güncelle</h3>
+    }
+
+    <form method="POST" asp-action="Create2" autocomplete="off">
+        <div class="" style="padding: 25px;">
+            <input type="hidden" asp-for="Id" />
+            <label>Ad : </label>
+            <input type="text" placeholder="Adı Girin" asp-for="Ad" required>
+            <label>Soyad : </label>
+            <input type="text" placeholder="Soyadı Girin" asp-for="Soyad" required>
+            <label>Yetki : </label>
+            <input type="text" placeholder="Yetkiyi Girin" asp-for="Yetki" required>
+            <label>Bölüm : </label>
+            <input type="text" placeholder="Bölümü Girin" asp-for="Bolum">
+            <label>Şifre : </label>
+            <input type="text" placeholder="Şifreyi Girin" asp-for="Sifre" required>
+
+            <button class="btn btn-primary btn-block" type="submit">Güncelle</button>
+
+        </div>
+    </form>
+
+
+</div>

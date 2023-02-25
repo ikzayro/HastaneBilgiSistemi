@@ -1,0 +1,33 @@
+﻿@model HastaneBilgiSistemi.Models.Hastalar
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="container">
+        <h3>Test İste</h3>
+
+
+    <form method="POST" asp-action="Create" autocomplete="off">
+        <div class="" style="padding: 25px;">
+            <input type="hidden" asp-for="Id" />
+            <label>Ad : </label>
+            <input type="text" placeholder="Adı Girin" asp-for="Ad" required>
+            <label>Soyad : </label>
+            <input type="text" placeholder="Soyadı Girin" asp-for="Soyad" required>
+            <input type="hidden" placeholder="Soyadı Girin" asp-for="Bolum" required>
+            <input type="hidden" placeholder="Soyadı Girin" asp-for="DoktorAd" required>
+            <input type="hidden" placeholder="Soyadı Girin" asp-for="DoktorSoyad" required>
+            <input type="hidden" placeholder="Soyadı Girin" asp-for="HastaOykusu">
+            <input type="hidden" placeholder="Soyadı Girin" asp-for="Teshis">
+            <input type="hidden" placeholder="Soyadı Girin" asp-for="Tedavi">
+            <input type="hidden" placeholder="Soyadı Girin" asp-for="Ilaclar">
+            <label>İstenilen Test </label>
+            <input type="text" placeholder="Test İsmini Girin" asp-for="LaboratuvarTest">
+            <button class="btn btn-primary btn-block" type="submit">İste</button>
+
+        </div>
+    </form>
+
+
+</div>

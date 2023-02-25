@@ -1,0 +1,35 @@
+﻿@model HastaneBilgiSistemi.Models.MultipleModel  
+@{                                          // yukarıda bu sayfada kullanılacak model tanımını yaptık
+    ViewData["Title"] = "Home Page";        //sayfa başlıgı
+    Layout = "~/Views/Shared/_Layout4.cshtml";  //kullanılacak layout
+}
+
+<div class="container">
+    @if (Model.bolumler11.Id == 0 )     //eger controller'dan id gelmiyor ise (yani yeni bölüm ekleniyorsa)
+    {
+        <h3>Bölüm Ekle</h3>
+    }
+    else                 //eger id geliyor ise
+    {
+        <h3>Bölüm Güncelle</h3>
+    }
+    @ViewBag.a
+    <form method="POST" asp-action="Create" autocomplete="off">     <!-- formdaki verileri create actionuna gönder -->
+        <div class="" style="padding: 25px;">
+            <input type="hidden" asp-for="bolumler11.Id" />
+            <label>Bölüm : </label>
+            <input type="text" placeholder="Bölümü Girin" asp-for="bolumler11.Bolum" required>
+            @if (Model.bolumler11.Id == 0)
+            {
+                <button class="btn btn-primary btn-block" type="submit">Ekle</button>
+            }
+            else
+            {
+
+                <button class="btn btn-primary btn-block" type="submit">Güncelle</button>
+            }
+        </div>
+    </form>
+
+
+</div>

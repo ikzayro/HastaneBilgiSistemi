@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout4.cshtml";
+    string name = Context.Session.GetString("name"); //http istegindeki isim soyisimi degişkenlere atıyoruz
+    string surname = Context.Session.GetString("surname");
+}
+
+<div class="container">
+    <h2>Hoşgeldiniz Sayın @name @surname</h2><br>   <!-- yukarıda oluşturdugumuz degişkenleri burda yazdırıyoruz -->
+    <h4>Yukaridaki menülerden istediginiz işlemi seçebilirsiniz.</h2>
+</div>

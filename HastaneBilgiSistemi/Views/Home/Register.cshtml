@@ -1,0 +1,176 @@
+﻿@model HastaneBilgiSistemi.Models.Kullanicilar
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #eceffc;
+    }
+
+    .btn {
+        padding: 8px 20px;
+        border-radius: 0;
+        overflow: hidden;
+        &::before
+
+    {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient( 120deg, transparent, var(--primary-color), transparent );
+        transform: translateX(-100%);
+        transition: 0.6s;
+    }
+
+    &:hover {
+        background: transparent;
+        box-shadow: 0 0 20px 10px hsla(204, 70%, 53%, 0.5);
+        &::before
+
+    {
+        transform: translateX(100%);
+    }
+
+    }
+    }
+
+    .form-input-material {
+        --input-default-border-color: white;
+        --input-border-bottom-color: white;
+        input
+
+    {
+        color: white;
+    }
+
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 40px;
+        color: white;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109), 0 1px 1px rgba(128, 128, 128, 0.155), 0 2.1px 2.1px rgba(128, 128, 128, 0.195), 0 4.4px 4.4px rgba(128, 128, 128, 0.241), 0 12px 12px rgba(128, 128, 128, 0.35);
+        h1
+
+    {
+        margin: 0 0 24px 0;
+    }
+
+    .form-input-material {
+        margin: 12px 0;
+    }
+
+    .btn {
+        width: 100%;
+        margin: 18px 0 9px 0;
+    }
+    }
+</style>
+
+<center> <h1> Hastane Bilgi Sistemi </h1> </center>
+
+<!--<div class="container">
+    <form method="POST" asp-action="SignUp">
+        <label>Ad : </label>
+        <input type="text" placeholder="Adınızı Giriniz" name="Ad" required>
+        <label>Soyad : </label>
+        <input type="text" placeholder="Soyadınızı Giriniz" name="Soyad" required>
+        <label>Yetki : </label>
+        <select id="yetki" name="Yetki" onchange="check()">
+            <option value="Admin">Yönetici</option>
+            <option value="Hasta">Hasta</option>
+            <option value="Doktor">Doktor</option></a>
+            <option value="Lab">LabGörevlisi</option>
+        </select>
+        <div id="bolumSelect">
+            <label>Bölüm : </label>
+            <select name="Bolum" class="form-control" asp-items="@(new SelectList(ViewBag.bolumListesi, "Value", "Text"))" asp-for="Bolum"  required>
+            </select>
+        </div>
+        <br />
+        <label>Şifre : </label>
+        <input type="password" placeholder="Şifrenizi Giriniz" name="Sifre" required>
+        <button type="submit">Kayıt Ol</button>
+    </form>
+</div>-->
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-xl-5 col-md-8">
+            <form class="bg-white rounded-5 shadow-5-strong p-5" asp-action="SignUp" method="POST">
+                <h2>Kayıt Ol</h2>
+                <div class="form-outline mb-4">
+                    <label class="form-label">Ad:</label>
+                    <input type="text" class="form-control" placeholder="Adınızı Giriniz" name="Ad"  />
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label">Soyad:</label>
+                    <input type="text" class="form-control" placeholder="Soyadınızı Giriniz" name="Soyad"  />
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label">Yetki:</label>
+                    <select class="form-control" id="yetki" name="Yetki" onchange="check()">
+                        <option value="Admin">Yönetici</option>
+                        <option value="Hasta">Hasta</option>
+                        <option value="Doktor">Doktor</option></a>
+                        <option value="Lab">LabGörevlisi</option>
+                    </select>
+                </div>
+                <div class="form-outline mb-4">
+                    <div id="bolumSelect">
+                        <label>Bölüm : </label>
+                        <select id="bolumTur" class="form-control" asp-items="@(new SelectList(ViewBag.bolumListesi, "Value", "Text"))" >
+                        </select>
+                    </div>
+                </div>
+                <input id="bolumAd" type="hidden" name="Bolum" />
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form1Example2">Password</label>
+                    <input type="password" class="form-control" placeholder="Şifrenizi Giriniz" name="Sifre" />
+                </div>
+
+                <button type="submit" onclick="setNames()" class="btn btn-primary btn-block">Kayıt Ol</button>
+
+            </form>
+            <form style="display: inline" action="~/Home/Index" method="get">
+                <button type="submit" class="btn btn-dark btn-block">Giriş Yap</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("bolumSelect").style.display = "none"
+    function check() {
+        if (document.getElementById("bolumSelect").style.display == "none" && document.getElementById('yetki').selectedOptions[0].value == "Doktor")
+            document.getElementById("bolumSelect").style.display = "block"
+        else {
+            document.getElementById("bolumSelect").style.display = "none"
+        }
+    }
+        function setNames() {
+            if (document.getElementById("yetki").selectedOptions[0].value == "Doktor") {
+                document.getElementById("bolumAd").value = document.getElementById("bolumTur").selectedOptions[0].value
+            }
+            else {
+                document.getElementById("bolumAd").value = ""
+            }
+
+        }
+            
+    
+</script>

@@ -1,0 +1,88 @@
+﻿@model HastaneBilgiSistemi.Models.Hastalar
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="container">
+    @if (Model.Id == 0)
+    {
+        <h3>Hasta Ekle</h3>
+    }
+    else
+    {
+        <h3>Hasta Güncelle</h3>
+    }
+
+
+    <form method="POST" asp-action="Create" autocomplete="off">
+        <div class="" style="padding: 25px;">
+            <input type="hidden" asp-for="Id" />
+
+            <input type="hidden" placeholder="Adı Girin" asp-for="Ad">
+
+            <input type="hidden" placeholder="Soyadı Girin" asp-for="Soyad">
+            <label>Bölüm : </label>
+            <select id="yetki" class="form-control" asp-items="@(new SelectList(ViewBag.bolumListesi, "Value", "Text"))" asp-for="Bolum" onchange="check()" required>
+            </select>
+            <label>Doktor : </label>
+            @{
+                foreach (var Data in ViewBag.bolumListesi)
+                {
+                    if (ViewData[Data.Text + "Ad"] != null)
+                    {
+                        <div id=@Data.Text>
+                            @Html.DropDownList("Doctor", ViewData[Data.Text + "Ad"] as IEnumerable<SelectListItem>, new { @id = @Data.Text + "1", @class = "form-control" })
+                        </div>
+                    }
+
+
+
+                }
+            }
+
+            <input id="doktorAd" type="hidden" asp-for="DoktorAd" />
+            <input id="doktorSoyad" type="hidden" asp-for="DoktorSoyad" />
+
+
+            <input type="hidden" placeholder="Hasta Öyküsünü Girin" asp-for="HastaOykusu" >
+
+            <input type="hidden" placeholder="Teşhisi Girin" asp-for="Teshis" >
+
+            <input type="hidden" placeholder="Tedaviyi Girin" asp-for="Tedavi" >
+
+            <input type="hidden" placeholder="İlaçları Girin" asp-for="Ilaclar" >
+
+            <input id="doktorAd" type="hidden" asp-for="LaboratuvarTest" />
+            <input id="doktorSoyad" type="hidden" asp-for="LaboratuvarSonuc" />
+
+            <button class="btn btn-primary btn-block" onclick="setNames()" type="submit">Konsulte Et</button>
+
+        </div>
+    </form>
+
+    <script>
+        for (let i = 1; i < document.getElementById("yetki").length; i++) {
+            document.getElementById(document.getElementById("yetki").options[i].value + "1").style.display = "none"
+        }
+
+        var id = document.getElementById("yetki").selectedOptions[0].value + "1"
+
+        function check() {
+            document.getElementById(id).style.display = "none"
+            document.getElementById(document.getElementById("yetki").selectedOptions[0].value + "1").style.display = "block"
+            id = document.getElementById("yetki").selectedOptions[0].value + "1"
+
+        }
+
+        function setNames() {
+            var text = document.getElementById(document.getElementById("yetki").selectedOptions[0].value + "1").selectedOptions[0].value
+            var arr = text.split(/\s+/)
+            document.getElementById("doktorAd").value = arr[0];
+            document.getElementById("doktorSoyad").value = arr[1]
+
+        }
+    </script>
+
+
+</div>

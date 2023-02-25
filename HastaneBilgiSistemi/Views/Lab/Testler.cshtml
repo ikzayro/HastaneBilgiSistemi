@@ -1,0 +1,45 @@
+﻿@model IEnumerable<HastaneBilgiSistemi.Models.Hastalar>
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+
+<div class="container">
+    <h3>Mevcut Hastalarım</h3>
+    <table>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Bolum</th>
+            <th>İstenilen Test</th>
+            <th>Test Sonucu</th>
+            <th></th>
+        </tr>
+
+        @{
+            if (Model != null)
+            {
+                foreach (var Data in Model)
+                {
+                    if (Data.LaboratuvarTest != null)
+                    {
+                    <tr>
+                        <td>@Data.Ad</td>
+                        <td>@Data.Soyad</td>
+                        <td>@Data.Bolum</td>
+                        <td>@Data.LaboratuvarTest</td>
+                        <td>@Data.LaboratuvarSonuc</td>
+                        <td>
+                            <a asp-action="TestSonuc" asp-route-id="@Data.Id"><button class="btn btn-info btn-block" type="button">Sonuç Gir</button></a>
+                        </td>
+                    </tr>
+                    }
+                }
+
+            }
+        }
+
+    </table>
+
+
+</div>
